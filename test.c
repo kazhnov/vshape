@@ -14,9 +14,22 @@ int main() {
     second.center[0] += 10;
     assert(!VSHAPE_Collide(first, second));
 
-    VM3_Set(position, 0, 0, 0);
-    VShape box1 = VSHAPE_BoxCreate(position, (f32[]){1, 1, 1}, (f32[3]){0, 0, 0});
-    VM3_Set(position, 1., 0., 1.);
-    VShape box2 = VSHAPE_BoxCreate(position, (f32[]){1, 1, 1}, (f32[3]){0, V_PI/6, 0});
+    VShape box1 = VSHAPE_BoxCreate((f32[3]){0, 0, 0}, (f32[3]){1, 1, 1}, (f32[3]){0, 0, 0});
+    VShape box2 = VSHAPE_BoxCreate((f32[3]){1, 0, 1}, (f32[3]){1, 1, 1}, (f32[3]){0, V_PI/6, 0});
     assert(VSHAPE_Collide(box1, box2));
+
+    VShape box3 = VSHAPE_BoxCreate((f32[3]){0, 0, 0}, (f32[3]){1, 1, 1}, (f32[3]){0, 0, 0});
+    VShape box4 = VSHAPE_BoxCreate((f32[3]){1, 1, 1}, (f32[3]){1, 1, 1}, (f32[3]){0, V_PI/6, 0});
+    assert(!VSHAPE_Collide(box3, box4));
+
+    
+    VShape aabb1 = VSHAPE_AABBCreate((f32[3]){0, 0, 0}, (f32[3]){1, 1, 1});
+    VShape aabb2 = VSHAPE_AABBCreate((f32[3]){2, 2, 2}, (f32[3]){1, 1, 1});
+    assert(VSHAPE_Collide(aabb1, aabb2));
+
+    VShape aabb3 = VSHAPE_AABBCreate((f32[3]){0, 0, 0}, (f32[3]){1, 1, 1});
+    VShape aabb4 = VSHAPE_AABBCreate((f32[3]){3, 2, 2}, (f32[3]){1, 1, 1});
+    assert(!VSHAPE_Collide(aabb3, aabb4));
+
+
 }

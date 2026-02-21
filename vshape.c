@@ -8,6 +8,7 @@
 
 bool iVSHAPE_CollisionSpheresGet(VShape a, VShape b);
 bool iVSHAPE_CollisionBoxesGet(VShape a, VShape b);
+bool iVSHAPE_CollisionAABBsGet(VShape a, VShape b);
 void iVSHAPE_BoxCornersGet(VShape box, float corners[8][3]);
 
 VShape VSHAPE_SphereCreate(float center[3], float radius) {
@@ -103,6 +104,18 @@ bool VSHAPE_Collide(VShape a, VShape b) {
 	    break;
 	}
 	break;
+    case VSHAPE_AABB:
+	switch (b.type) {
+	case VSHAPE_SPHERE:
+	    break;
+	case VSHAPE_BOX:
+	    break;
+	case VSHAPE_AABB:
+	    return iVSHAPE_CollisionAABBsGet(a, b);
+	    break;
+	default:
+	    break;
+	}
     default:
 	assert(false);
 	break;
@@ -112,6 +125,16 @@ bool VSHAPE_Collide(VShape a, VShape b) {
 
 bool iVSHAPE_CollisionSpheresGet(VShape a, VShape b) {
     return VM3_Distance(a.center, b.center) < a.radius + b.radius;
+}
+
+bool iVSHAPE_CollisionAABBsGet(VShape a, VShape b) {
+    return
+	a.center[0] - a.size[0] <= b.center[0] + b.size[0] &&
+	a.center[0] + a.size[0] >= b.center[0] - b.size[0] &&
+	a.center[1] - a.size[1] <= b.center[1] + b.size[1] &&
+	a.center[1] + a.size[1] >= b.center[1] - b.size[1] &&
+	a.center[2] - a.size[2] <= b.center[2] + b.size[2] &&
+	a.center[2] + a.size[2] >= b.center[2] - b.size[2];
 }
 
 void iVSHAPE_BoxCornersGet(VShape box, float corners[8][3]) {
