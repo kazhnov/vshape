@@ -41,8 +41,8 @@ VShape VSHAPE_FrustrumCreate(float center[3], float rotation[3], float radius, f
     frustrum.type = VSHAPE_FRUSTRUM;
     VM3_Copy(frustrum.center, center);
     VM3_Copy(frustrum.rotation, rotation);
-    frustrum.size[0] = fov;
-    frustrum.size[1] = fov/ratio;
+    frustrum.size[0] = fov*ratio;
+    frustrum.size[1] = fov;
     frustrum.size[2] = radius;
     return frustrum;
 }
