@@ -104,7 +104,7 @@ VShape VSHAPE_BoxFromVertices(void *vertices, u32 count, u32 stride, u32 offset)
     VM3_Set(max,-FLT_MAX,-FLT_MAX,-FLT_MAX);
     
     for (u32 i = 0; i < count; i++) {
-	float* vertex = (char*)vertices + offset + i*stride;
+	float* vertex = (float*)((char*)vertices + offset + i*stride);
 	
 	max[0] = MAX(max[0], vertex[0]);
 	max[1] = MAX(max[1], vertex[1]);
