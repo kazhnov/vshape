@@ -97,19 +97,21 @@ VShape VSHAPE_AABBGet(VShape shape) {
     }
 }
 
-VShape VSHAPE_BoxFromVertices(u32 vcount, f32 vertices[vcount][3]) {
+VShape VSHAPE_BoxFromVertices(void *vertices, u32 count, u32 stride, u32 offset) {
     f32 min[3]; f32 max[3];
     VM3_Set(min, FLT_MAX, FLT_MAX, FLT_MAX);
     VM3_Set(max,-FLT_MAX,-FLT_MAX,-FLT_MAX);
     
     for (u32 i = 0; i < vcount; i++) {
-	max[0] = MAX(max[0], vertices[i][0]);
-	max[1] = MAX(max[1], vertices[i][1]);
-	max[2] = MAX(max[2], vertices[i][2]);
+	float* vertex = (f32*)vertices + offset + i*stride;
+	
+	max[0] = MAX(max[0], vertex[0]);
+	max[1] = MAX(max[1], vertex[1]);
+	max[2] = MAX(max[2], vertex[2]);
 
-	min[0] = MIN(min[0], vertices[i][0]);
-	min[1] = MIN(min[1], vertices[i][1]);
-	min[2] = MIN(min[2], vertices[i][2]);
+	min[0] = MIN(min[0], vertex[0]);
+	min[1] = MIN(min[1], vertex[1]);
+	min[2] = MIN(min[2], vertex[2]);
     }
 
     f32 center[3]; f32 size[3]; f32 halfsize[3];

@@ -32,7 +32,7 @@ VShape VSHAPE_FrustrumCreate(float center[3], float distance, float fov, float r
 VShape VSHAPE_AABBCreate(float center[3], float size[3]);
 VShape VSHAPE_AABBGet(VShape shape);
 
-VShape VSHAPE_BoxFromVertices(float *vertices[3]);
+VShape VSHAPE_BoxFromVertices(void *vertices, u32 count, u32 stride, u32 offset) {
 
 bool VSHAPE_Collide(VShape a, VShape b);
 bool VSHAPE_CollisionGet(VShape a, VShape b, float to_separate[3]);
