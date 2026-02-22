@@ -1,4 +1,4 @@
-#include "vshape.h"
+b#include "vshape.h"
 #include "include/vmath/vmath.h"
 #include <assert.h>
 #include <float.h>
@@ -97,6 +97,27 @@ VShape VSHAPE_AABBGet(VShape shape) {
     }
 }
 
+VShape VSHAPE_BoxFromVertices(u32 vcount, f32 vertices[vcount][3]) {
+    f32 min[3]; f32 max[3];
+    VM3_Set(min, FLT_MAX, FLT_MAX, FLT_MAX);
+    VM3_Set(max,-FLT_MAX,-FLT_MAX,-FLT_MAX);
+    
+    for (u32 i = 0; i < vcount; i++) {
+	max[0] = MAX(max[0], vertices[i][0]);
+	max[1] = MAX(max[1], vertices[i][1]);
+	max[2] = MAX(max[2], vertices[i][2]);
+
+	min[0] = MIN(min[0], vertices[i][0]);
+	min[1] = MIN(min[1], vertices[i][1]);
+	min[2] = MIN(min[2], vertices[i][2]);
+    }
+
+    f32 center[3]; f32 size[3]; f32 halfsize[3];
+    VM3_SubtractO(max, min, size);
+    VM3_ScaleO(size, 0.5, halfsize);
+    VM3_AddO(min, halfsize, center);
+    return VSHAPE_BoxCreate(center, size, VM3_ZERO);
+}
 
 bool VSHAPE_CollisionGet(VShape a, VShape b, f32 to_separate[3]) {
     switch (a.type) {
