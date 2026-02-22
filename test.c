@@ -53,4 +53,15 @@ int main() {
     assert(!VSHAPE_Collide(aabb5, aabb6));
 
     printf("OK\n");
+
+
+    printf("Frustrum to Box: ");
+    fflush(stdout);
+    VShape frustrum = VSHAPE_FrustrumCreate((f32[3]){0, 0, 0}, (f32[3]){0, 0, 0}, 100, V_PI/3, 1);
+    VShape object_out = VSHAPE_BoxCreate((f32[3]){5, 5, 5}, VM3_ONE, VM3_ZERO);
+    VShape object_in  = VSHAPE_BoxCreate((f32[3]){0, 0,-5}, VM3_ONE, VM3_ZERO);
+    assert(!VSHAPE_Collide(frustrum, object_out));
+    assert(VSHAPE_Collide(frustrum, object_in));
+    
+    printf("OK\n");
 }

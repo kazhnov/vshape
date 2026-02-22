@@ -36,10 +36,11 @@ VShape VSHAPE_BoxCreate(float center[3], float size[3], float rotation[3]) {
     return box;
 }
 
-VShape VSHAPE_FrustrumCreate(float center[3], float radius, float fov, float ratio) {
+VShape VSHAPE_FrustrumCreate(float center[3], float rotation[3], float radius, float fov, float ratio) {
     VShape frustrum = {0};
     frustrum.type = VSHAPE_FRUSTRUM;
     VM3_Copy(frustrum.center, center);
+    VM3_Copy(frustrum.rotation, rotation);
     frustrum.size[0] = fov;
     frustrum.size[1] = fov/ratio;
     frustrum.size[2] = radius;

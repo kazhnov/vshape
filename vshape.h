@@ -26,8 +26,7 @@ typedef struct {
 
 VShape VSHAPE_SphereCreate(float center[3], float radius);
 VShape VSHAPE_BoxCreate(float center[3], float size[3], float rotation[3]);
-VShape VSHAPE_FrustrumCreate(float center[3], float distance, float fov, float ratio);
-
+VShape VSHAPE_FrustrumCreate(float center[3], float rotation[3], float distance, float fov, float ratio);
 
 VShape VSHAPE_AABBCreate(float center[3], float size[3]);
 VShape VSHAPE_AABBGet(VShape shape);
