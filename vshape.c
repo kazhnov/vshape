@@ -43,6 +43,7 @@ VShape VSHAPE_FrustrumCreate(float center[3], float radius, float fov, float rat
     frustrum.size[0] = fov;
     frustrum.size[1] = fov/ratio;
     frustrum.size[2] = radius;
+    return frustrum;
 }
 
 VShape VSHAPE_AABBCreate(float center[3], float size[3]) {
@@ -238,9 +239,10 @@ void iVSHAPE_BoxCornersGet(VShape box, float corners[8][3]) {
 void iVSHAPE_FrustrumCornersGet(VShape frustrum, float corners[5][3]) {
     float matrix[16] = VM44_IDENTITY;
     VM44_Rotate(matrix, frustrum.rotation);
-    VM44_Scale(matrix, (f32){radius, radius, radius});
-    VM44_Translate(matrix, frustrum.center);
     float radius = frustrum.size[2];
+    VM44_Scale(matrix, (f32[]){radius, radius, radius});
+    VM44_Translate(matrix, frustrum.center);
+
 
     float width = tanf(frustrum.size[0]/2);
     float height = tanf(frustrum.size[1]/2);
